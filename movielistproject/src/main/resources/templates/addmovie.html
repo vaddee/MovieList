@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Add a movie</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+</head>
+
+<body>
+
+    <h1>
+        Add a movie:
+    </h1>
+    <form method="POST" action="#" th:action="@{/savemovie}" th:object=${movie}>
+        <p>Name: <input type="text" th:field="${movie.name}" /></p>
+        <p>Director: <input type="text" th:field="${movie.director}" /></p>
+        <p>Publication Year: <input type="text" th:field="${movie.publicationYear}" /></p>
+       
+        <!-- <label for="categorylist">Category</label>
+        <select id="categorylist" th:field="*{category}" class="form-control">
+            <option th:each="category: ${categories}" th:value="${category.categoryId}" th:text="${category.name}">
+            </option>
+        </select> -->
+        <input type="submit" value="Add" />
+    </form>
+    </form>
