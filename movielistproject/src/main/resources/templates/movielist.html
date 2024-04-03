@@ -3,45 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>List of Movies</title>
     <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
 </head>
 <body>
-    <h1>List of movies</h1>
+    <h3>Welcome <span sec:authentication="name"></span></h3>
+    <h1>List of Movies</h1>
     <div class="col-md-4" style="padding:20px 0">
 		<form th:action="@{/logout}" method="post">
 			<input type="submit" value="Sign Out" class="btn btn-sm btn-danger"/>
 		</form>
 
-
     <table class="table table-dark">
-        <tr>
-            <th>Movie id</th>
-            <th>Name</th>
-            <th>Publication year</th>
-            <th>Director</th>
-        </tr>
-        <tr th:each="movie: ${movies}">
-            <td>
-                <span th:text="${movie.movieId}">Movie id</span>
-            </td>
-            <td>
-                <span th:text="${movie.name}">Movie name</span>
-            </td>
-            <td>
-                <span th:text="${movie.publicationYear}">Publication year</span>
-            </td>
-            <td>
-                <span th:text="${movie.director}">Director</span>
-            </td>
-            <td > <!-- sec:authorize="hasAuthority('ADMIN')" lisää td sisään -->
-                <a th:href="@{/deletemovie/{id}(id = ${movie.movieId})}">  
-                <button type="button" th:href="@{/deletemovie/{id}(id = ${movie.movieId})}" class="btn btn-danger">Delete</button>
-                <a th:href="@{/editmovie/{id}(id = ${movie.movieId})}">  
-                <button type="button" th:href="@{/editmovie/{id}(id = ${movie.movieId})}" class="btn btn-success">Edit</button>
-            
-            </td>
-        </tr>
+        <thead>
+            <tr>
+                <th>Movie ID</th>
+                <th>Name</th>
+                <th>Publication Year</th>
+                <th>Director</th>
+                <th>Rating</th>
+                <th>Average Rating</th> <!-- Add a new table header for average rating -->
+                <th>Number of Reviews</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="movie : ${movies}">
+                <td th:text="${movie.movieId}">Movie ID</td>
+                <td th:text="${movie.name}">Name</td>
+                <td th:text="${movie.publicationYear}">Publication Year</td>
+                <td th:text="${movie.director}">Director</td>
+                <td>
+                    <span th:if="${movie.rating != null}" th:text="${movie.rating.ratingValue}">No rating</span>
+                    <span th:unless="${movie.rating != null}">No rating</span>
+                </td>
+                <td th:text="${movie.averageRating}">No rating</td> <!-- Display average rating -->
+                <td th:text="${#lists.size(movie.ratings)} + ' reviews'">No reviews</td> <!-- Calculate number of reviews -->
+                <td><!-- sec:authorize="hasAuthority('ADMIN')" lisää td sisään -->
+                    <a th:href="@{/deletemovie/{id}(id=${movie.movieId})}" class="btn btn-danger">Delete</a>
+                    <a th:href="@{/editmovie/{id}(id=${movie.movieId})}" class="btn btn-success">Edit</a>
+                    <a th:href="@{'/rate_movie/' + ${movie.movieId}}" class="btn btn-primary">Rate</a>
+                </td>
+            </tr>
+        </tbody>
     </table>
     <p><a th:href="@{/addmovie}" class="btn btn-success">Add a new movie</a></p>
 </body>

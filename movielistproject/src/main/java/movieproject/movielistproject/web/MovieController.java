@@ -7,13 +7,18 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+
 
 import movieproject.movielistproject.domain.Movie;
 import movieproject.movielistproject.domain.MovieRepository;
+import movieproject.movielistproject.domain.Rating;
+import movieproject.movielistproject.domain.RatingRepository;
 
 @Controller
 
@@ -22,6 +27,9 @@ public class MovieController {
     
     @Autowired
     private MovieRepository movieRepository;
+    @Autowired
+    private RatingRepository ratingRepository;
+    
 
     @RequestMapping(value = "/movielist", method = RequestMethod.GET)
     public String getMovies(Model model){
@@ -84,6 +92,73 @@ public class MovieController {
        
         return "redirect:/movielist"; 
     }
+
+    @GetMapping("/rate_movie/{movieId}")
+    public String showRatingForm(@PathVariable("movieId") Integer movieId, Model model) {
+        model.addAttribute("movieId", movieId);
+        model.addAttribute("rating", new Rating());
+        return "rate_movie";
+    }
+
+
+
+/*     @PostMapping("/rate_movie/{movieId}")
+public String submitRating(@PathVariable("movieId") Integer movieId, @ModelAttribute Rating rating) {
+    Optional<Movie> optionalMovie = movieRepository.findById(movieId);
+    
+    if (optionalMovie.isPresent()) {
+        Movie movie = optionalMovie.get();
+        rating.setMovie(movie);
+        ratingRepository.save(rating);
+        
+        // Reload movie with updated ratings
+        movie.setRatings(ratingRepository.findByMovie(movie));
+        movieRepository.save(movie);
+    } else {
+        // Handle movie not found
+    }
+
+    return "redirect:/movielist"; 11
+}
+ */
+@PostMapping("/rate_movie/{movieId}")
+public String submitRating(@PathVariable("movieId") Integer movieId, @ModelAttribute Rating rating) {
+    Optional<Movie> optionalMovie = movieRepository.findById(movieId);
+    
+    if (optionalMovie.isPresent()) {
+        Movie movie = optionalMovie.get();
+        
+        // Set the movie for the rating
+        rating.setMovie(movie);
+        
+        // Save the rating
+        ratingRepository.save(rating);
+        
+        // Update the movie's ratings list
+        List<Rating> ratings = movie.getRatings();
+        if (ratings == null) {
+            ratings = new ArrayList<>();
+        }
+        ratings.add(rating);
+        movie.setRatings(ratings);
+        
+        // Recalculate the average rating
+        double sum = ratings.stream().mapToDouble(Rating::getRatingValue).sum();
+        double averageRating = sum / ratings.size();
+        movie.setAverageRating(averageRating);
+        
+        // Save the updated movie
+        movieRepository.save(movie);
+        
+        return "redirect:/movielist";
+    } else {
+        // Handle movie not found
+        return "error";
+    }
+}
+
+
+    
 
     }
 

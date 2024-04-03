@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-MovielistprojectApplication<movielistproject>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "movieproject.movielistproject.MovielistprojectApplication",
+            "projectName": "movielistproject",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
