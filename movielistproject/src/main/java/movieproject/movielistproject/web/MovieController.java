@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-
+import movieproject.movielistproject.domain.CategoryRepository;
 import movieproject.movielistproject.domain.Movie;
 import movieproject.movielistproject.domain.MovieRepository;
 import movieproject.movielistproject.domain.Rating;
@@ -29,6 +29,8 @@ public class MovieController {
     private MovieRepository movieRepository;
     @Autowired
     private RatingRepository ratingRepository;
+    @Autowired
+    private CategoryRepository categoryRepository; /* kommentoi jos ei toimi */
     
 
     @RequestMapping(value = "/movielist", method = RequestMethod.GET)
@@ -48,7 +50,7 @@ public class MovieController {
         
         model.addAttribute("movie", new Movie()); 
         
-        /* model.addAttribute("categories", categoryRepository.findAll()); */
+         model.addAttribute("categories", categoryRepository.findAll()); /* kommentoi jos ei toimi */
         return "addmovie"; // .html
     }
 

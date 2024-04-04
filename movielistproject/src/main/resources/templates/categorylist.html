@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Category List</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+</head>
+
+<body>
+    <h1>Categories listed below</h1>
+    <p>
+    <table class="table table-striped">
+        <tr>
+            <th>Category id</th>
+            <th>Category name</th>
+        </tr>
+
+        <tr th:each="category : ${categories}">
+            <td>
+                <span th:text="${category.categoryId}">Category id</span>
+            </td>
+            <td>
+                <span th:text="${category.name}">Category</span>
+            </td>
+        </tr>
+    </table>
+    </p>
+    <p><a th:href="@{/newcategory}" class="btn btn-success">Add a new category</a></p>
+    <p><a th:href="@{/movielist}" class="btn btn-success">List of movies</a></p>
+
+
+</body>
+
+</html>

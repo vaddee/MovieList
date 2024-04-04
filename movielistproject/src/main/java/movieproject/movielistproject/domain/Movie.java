@@ -3,11 +3,14 @@ package movieproject.movielistproject.domain;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
@@ -30,22 +33,35 @@ public class Movie {
 
     private double averageRating; // New field to store the average rating
 
+    // Movie ManyToOne Category
+    @JsonIgnoreProperties("movies") // avoidataan infinite loop Json haussa!
+    @ManyToOne
+    @JoinColumn(name = "categoryid") // Fk
+    private Category category;
+
     public Movie() {
     }
 
-    public Movie(Integer movieId, String name, Integer publicationYear, String director, Rating rating) {
+    public Movie(Integer movieId, String name, Integer publicationYear, String director, Rating rating, Category category) {
         this.movieId = movieId;
         this.name = name;
         this.publicationYear = publicationYear;
         this.director = director;
         this.rating = rating;
+        this.category = category;
       
     }
 
     // Getters and setters
 
    
+    public Category getCategory() {
+        return category;
+    }
 
+    public void setCategory(Category category) { /* kommentoi jos ei toimi categoriat */
+        this.category = category;
+    }
     public Integer getMovieId() {
         return movieId;
     }
@@ -127,14 +143,9 @@ public class Movie {
         
         @Override
         public String toString() {
-            return "Movie{" +
-                    "movieId=" + movieId +
-                    ", name='" + name + '\'' +
-                    ", publicationYear=" + publicationYear +
-                    ", director='" + director + '\'' +
-                    ", rating=" + rating +
-                    '}';
-    }
+            return "Movie [movieId=" + movieId + ", name=" + name + ", publicationYear=" + publicationYear
+                    + ", director=" + director + ", rating=" + rating + ", category=" + category + "]";
+        }
 
     
 }

@@ -5,6 +5,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import movieproject.movielistproject.domain.Category;
+import movieproject.movielistproject.domain.CategoryRepository;
 import movieproject.movielistproject.domain.Movie;
 import movieproject.movielistproject.domain.MovieRepository;
 import movieproject.movielistproject.domain.Rating;
@@ -19,8 +21,29 @@ public class MovielistprojectApplication {
 		SpringApplication.run(MovielistprojectApplication.class, args);
 	}
 	@Bean
-	public CommandLineRunner demo(MovieRepository movieRepository, UserRepository userRepository, RatingRepository ratingRepository) {
+	public CommandLineRunner demo(MovieRepository movieRepository, UserRepository userRepository, RatingRepository ratingRepository, CategoryRepository categoryRepository) {
 		return (args) -> {
+
+			//luonti
+			Category category1 = new Category("Fantasy");
+			
+			Category category2 = new Category("Horror");
+			
+			Category category3 = new Category("Comedy");
+			
+			Category category4 = new Category("Documentary");
+			
+			Category category5 = new Category("Science-fiction");
+			
+			Category category6 = new Category("Crime");
+			
+			//tallennus
+			categoryRepository.save(category1);
+			categoryRepository.save(category2);
+			categoryRepository.save(category3);
+			categoryRepository.save(category4);
+			categoryRepository.save(category5);
+			categoryRepository.save(category6);
 
 			 // Ratings 1-5/
 
@@ -44,21 +67,21 @@ public class MovielistprojectApplication {
 
 
 
-			/* Movie movie1 = new Movie(1, "The Batman", 2022, "Matt Reeves", rating4);
+			 Movie movie1 = new Movie(1, "The Batman", 2022, "Matt Reeves", rating4,category1);
 
 			movieRepository.save(movie1);
 
-			Movie movie2 = new Movie(2, "Parasite", 2017, "Bong Joon Ho", rating5);
+			Movie movie2 = new Movie(2, "Parasite", 2017, "Bong Joon Ho", rating5, category3);
 
 			movieRepository.save(movie2);
 
-			Movie movie3 = new Movie(3, "The Silence of the Lambs", 1991, "Jonathan Demme", rating3);
+			Movie movie3 = new Movie(3, "The Silence of the Lambs", 1991, "Jonathan Demme", rating3, category4);
 
 			movieRepository.save(movie3);
 
-			Movie movie4 = new Movie(4, "jaskajokunen", 2022, "v.l", rating5);
+			Movie movie4 = new Movie(4, "jaskajokunen", 2022, "v.l", rating5, category2);
 			movieRepository.save(movie4);
- */
+ 
 			
 
 

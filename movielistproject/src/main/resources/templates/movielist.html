@@ -5,48 +5,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>List of Movies</title>
     <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" /> <!-- import starbutton -->
+
+
+    <style>
+        body {
+            background-color: #343a40; /* Dark background color */
+            color: #ffffff; /* Light text color */
+        }
+
+        .container {
+            background-color: #ffffff; /* Light background color for the container */
+            color: #343a40; /* Dark text color for the container */
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h3>Welcome <span sec:authentication="name"></span></h3>
-    <h1>List of Movies</h1>
-    <div class="col-md-4" style="padding:20px 0">
-		<form th:action="@{/logout}" method="post">
-			<input type="submit" value="Sign Out" class="btn btn-sm btn-danger"/>
-		</form>
+    <div class="container">
+        <h3>Welcome <span sec:authentication="name"></span></h3>
+        <h1>List of Movies</h1>
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Sign Out" class="btn btn-sm btn-danger"/>
+        </form>
 
-    <table class="table table-dark">
-        <thead>
-            <tr>
-                <th>Movie ID</th>
-                <th>Name</th>
-                <th>Publication Year</th>
-                <th>Director</th>
-                <th>Rating</th>
-                <th>Average Rating</th> <!-- Add a new table header for average rating -->
-                <th>Number of Reviews</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="movie : ${movies}">
-                <td th:text="${movie.movieId}">Movie ID</td>
-                <td th:text="${movie.name}">Name</td>
-                <td th:text="${movie.publicationYear}">Publication Year</td>
-                <td th:text="${movie.director}">Director</td>
-                <td>
-                    <span th:if="${movie.rating != null}" th:text="${movie.rating.ratingValue}">No rating</span>
-                    <span th:unless="${movie.rating != null}">No rating</span>
-                </td>
-                <td th:text="${movie.averageRating}">No rating</td> <!-- Display average rating -->
-                <td th:text="${#lists.size(movie.ratings)} + ' reviews'">No reviews</td> <!-- Calculate number of reviews -->
-                <td><!-- sec:authorize="hasAuthority('ADMIN')" lisää td sisään -->
-                    <a th:href="@{/deletemovie/{id}(id=${movie.movieId})}" class="btn btn-danger">Delete</a>
-                    <a th:href="@{/editmovie/{id}(id=${movie.movieId})}" class="btn btn-success">Edit</a>
-                    <a th:href="@{'/rate_movie/' + ${movie.movieId}}" class="btn btn-primary">Rate</a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <p><a th:href="@{/addmovie}" class="btn btn-success">Add a new movie</a></p>
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Movie ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Publication Year</th>
+                    <th scope="col">Director</th>
+                    <th scope="col">Rating</th>
+                    <th scope="col">Average Rating</th>
+                    <th scope="col">Number of Reviews</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="movie : ${movies}">
+                    <td th:text="${movie.movieId}">Movie ID</td>
+                    <td th:text="${movie.name}">Name</td>
+                    <td th:text="${movie.publicationYear}">Publication Year</td>
+                    <td th:text="${movie.director}">Director</td>
+                    <td>
+                        <span th:if="${movie.rating != null}" th:text="${movie.rating.ratingValue}">No rating</span>
+                        <span th:unless="${movie.rating != null}">No rating</span>
+                    </td>
+                    <td> <!-- pois jos ei toimi -->
+                        <span th:if="${movie.category != null}" th:text="${movie.category.name}">Category</span>
+                        <span th:if="${movie.category == null}" th:text="None">Category</span>
+                    </td>
+                    <td th:text="${movie.averageRating}">No rating</td>
+                    <td th:text="${#lists.size(movie.ratings)} + ' reviews'">No reviews</td>
+                    <td>
+                        <a th:href="@{/deletemovie/{id}(id=${movie.movieId})}" class="btn btn-danger">Delete</a>
+                        <a th:href="@{/editmovie/{id}(id=${movie.movieId})}" class="btn btn-success">Edit</a>
+                        <a th:href="@{'/rate_movie/' + ${movie.movieId}}" class="btn btn-warning">
+                            <i class="fas fa-star"></i> Rate  <!-- star button -->
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <a th:href="@{/addmovie}" class="btn btn-success">Add a new movie</a>
+        <p><a th:href="@{/categorylist}" class="btn btn-success">See all categories</a></p>
+    </div>
 </body>
 </html>
