@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -64,7 +65,7 @@ public class MovieController {
     }
 
      @RequestMapping(value = "/deletemovie/{movieId}", method = RequestMethod.GET)
-    /* @PreAuthorize("hasAuthority('ADMIN')") //suojaa deleten vain adminille, case sensitive  */
+    @PreAuthorize("hasAuthority('ADMIN')") //admin voi vain poistaa
     public String deleteBook(@PathVariable("movieId") Integer movieId, Model model) {
         
 
@@ -74,6 +75,7 @@ public class MovieController {
     }
 
     @RequestMapping(value = "/editmovie/{movieId}", method = RequestMethod.GET)
+    @PreAuthorize("hasAuthority('ADMIN')") //admin voi vain muokata
     public String editMovieGet(@PathVariable("movieId") Integer movieId, Model model) {
 
         Optional<Movie> movieToEdit = movieRepository.findById(movieId);

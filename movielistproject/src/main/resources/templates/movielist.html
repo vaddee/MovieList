@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>List of Movies</title>
     <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" /> <!-- import starbutton -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" /> <!-- import ikonit -->
 
 
     <style>
@@ -21,10 +21,30 @@
             border-radius: 10px;
             margin-top: 20px;
         }
+        .intro-section {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .intro-message {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- Welcome/Introducing Message Section -->
+        <div class="intro-section">
+            
+            <p class="intro-message">Explore our collection of movies and feel free to add new ones or rate existing ones.</p>
+            <p class="intro-message">Dive into the world of cinema and share your thoughts with us.</p>
+            <p class="intro-message">Lights, camera, action! <i class="fas fa-video"></i></p> <!-- Adding a video icon for fun -->
+        </div>
+
         <h3>Welcome <span sec:authentication="name"></span></h3>
         <h1>List of Movies</h1>
         <form th:action="@{/logout}" method="post">
@@ -39,9 +59,10 @@
                     <th scope="col">Publication Year</th>
                     <th scope="col">Director</th>
                     <th scope="col">Rating</th>
+                    <th scope="col">Category</th>
                     <th scope="col">Average Rating</th>
                     <th scope="col">Number of Reviews</th>
-                    <th scope="col">Category</th>
+                    
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
@@ -61,9 +82,12 @@
                     </td>
                     <td th:text="${movie.averageRating}">No rating</td>
                     <td th:text="${#lists.size(movie.ratings)} + ' reviews'">No reviews</td>
-                    <td>
+                    <td sec:authorize="hasAuthority('ADMIN')">
                         <a th:href="@{/deletemovie/{id}(id=${movie.movieId})}" class="btn btn-danger">Delete</a>
                         <a th:href="@{/editmovie/{id}(id=${movie.movieId})}" class="btn btn-success">Edit</a>
+                        
+                    </td>
+                    <td>
                         <a th:href="@{'/rate_movie/' + ${movie.movieId}}" class="btn btn-warning">
                             <i class="fas fa-star"></i> Rate  <!-- star button -->
                         </a>
@@ -72,6 +96,7 @@
             </tbody>
         </table>
         <a th:href="@{/addmovie}" class="btn btn-success">Add a new movie</a>
+        <p></p>
         <p><a th:href="@{/categorylist}" class="btn btn-success">See all categories</a></p>
     </div>
 </body>
