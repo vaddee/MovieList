@@ -59,7 +59,7 @@ public class Movie {
         return category;
     }
 
-    public void setCategory(Category category) { /* kommentoi jos ei toimi categoriat */
+    public void setCategory(Category category) { 
         this.category = category;
     }
     public Integer getMovieId() {
@@ -94,13 +94,8 @@ public class Movie {
         this.director = director;
     }
 
-    /* public List<Rating> getRatings() {
-        return ratings;
-    }
-    public void setRatings(List<Rating> ratings) {
-        this.ratings = ratings;
-    }
- */
+  
+ 
      public Rating getRating() {
         return rating;
     }
