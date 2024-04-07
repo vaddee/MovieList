@@ -3,14 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rate Movie</title>
+    <title>Rate and Review Movie</title>
     <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
 </head>
 <body>
-    <h1>Rate Movie</h1>
+    <h1>Rate and Review Movie</h1>
     <form method="POST" th:action="@{'/rate_movie/' + ${movieId}}">
-        <label for="ratingValue">Rating:</label>
-        <input type="number" id="ratingValue" name="ratingValue" min="1" max="5" required>
+        <div class="form-group">
+            <label for="ratingValue">Rating:</label>
+            <input type="number" id="ratingValue" name="ratingValue" min="1" max="5" required>
+        </div>
+        <div class="form-group">
+            <label for="reviewContent">Review:</label>
+            <textarea id="reviewContent" name="reviewContent" class="form-control" rows="4" required></textarea>
+        </div>
         <!-- You can add more input fields if necessary -->
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>

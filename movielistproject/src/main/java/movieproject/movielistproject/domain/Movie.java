@@ -112,14 +112,7 @@ public class Movie {
         this.ratings = ratings;
     }
 
- //calculates the average rating based on the ratings associated with the movie
-       /*  public double getAverageRating() {
-            if (rating != null) {
-                return rating.getRatingValue();
-            } else {
-                return 0.0; // Return 0 if no rating is set for the movie
-            }
-        } */
+
 
         public void setAverageRating(double averageRating) {
             this.averageRating = averageRating;

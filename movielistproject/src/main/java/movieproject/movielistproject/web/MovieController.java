@@ -32,6 +32,23 @@ public class MovieController {
     private RatingRepository ratingRepository;
     @Autowired
     private CategoryRepository categoryRepository; /* kommentoi jos ei toimi */
+
+    // Controller method to display reviews for a movie 123
+    @GetMapping("/read_reviews/{movieId}")
+    public String readReviews(@PathVariable("movieId") Integer movieId, Model model) {
+        // Find the movie by ID
+        Optional<Movie> optionalMovie = movieRepository.findById(movieId);
+        if (optionalMovie.isPresent()) {
+            Movie movie = optionalMovie.get();
+            // Get all ratings for the movie
+            List<Rating> ratings = ratingRepository.findByMovie(movie);
+            model.addAttribute("movie", movie);
+            model.addAttribute("ratings", ratings);
+            return "read_reviews"; // Return the name of the HTML template file
+        } else {
+            // Handle movie not found
+            return "error"; // Or any other appropriate action
+        }}
     
 
     @RequestMapping(value = "/movielist", method = RequestMethod.GET)

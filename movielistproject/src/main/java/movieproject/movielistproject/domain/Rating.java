@@ -14,9 +14,11 @@ public class Rating {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long ratingId;
     private int ratingValue;
+    private String reviewContent; // Added property for review content
+    private String reviewerName; // ei valttamatta tarvii ? nyt tostring null, ei linkitysta
 
     @ManyToOne
-    @JoinColumn (name = "movie_id") // Specify the foreign key column //tarviiko joincolumn?
+    @JoinColumn(name = "movie_id")
     private Movie movie;
 
     public Rating() {
@@ -42,6 +44,22 @@ public class Rating {
         this.ratingValue = ratingValue;
     }
 
+    public String getReviewContent() {
+        return reviewContent;
+    }
+
+    public void setReviewContent(String reviewContent) {
+        this.reviewContent = reviewContent;
+    }
+
+    public String getReviewerName() {
+        return reviewerName;
+    }
+
+    public void setReviewerName(String reviewerName) {
+        this.reviewerName = reviewerName;
+    }
+
     public Movie getMovie() {
         return movie;
     }
@@ -52,6 +70,6 @@ public class Rating {
 
     @Override
     public String toString() {
-        return "Rating [ratingId=" + ratingId + ", ratingValue=" + ratingValue + "]";
+        return "Rating [ratingId=" + ratingId + ", ratingValue=" + ratingValue + ", reviewContent=" + reviewContent + ", reviewerName=" + reviewerName + "]";
     }
 }

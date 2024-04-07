@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Read Reviews</title>
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+</head>
+<body>
+    <h1>Reviews for Movie: <span th:text="${movie.name}"></span></h1>
+    
+    <h2>Ratings and Reviews:</h2>
+    <ul>
+        <li th:each="rating : ${ratings}">
+            <!-- Display rating value -->
+            <p>Rating: <span th:text="${rating.ratingValue}"></span></p>
+            <!-- Display review content if available -->
+            <p th:if="${rating.reviewContent}" th:text="${rating.reviewContent}"></p>
+            <!-- Display reviewer's name if available -->
+            <p th:if="${rating.reviewerName}" th:text="'By: ' + ${rating.reviewerName}"></p>
+            
+            <hr> <!-- Add a horizontal line between each rating/comment pair -->
+        </li>
+    </ul>
+    
+</body>
+</html>
