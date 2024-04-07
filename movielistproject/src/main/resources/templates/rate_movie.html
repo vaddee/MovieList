@@ -5,20 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rate and Review Movie</title>
     <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+    <style>
+          body {
+            background-color: #343a40; /* Dark background color */
+            color: #ffffff; /* Light text color */
+        }
+
+        .container {
+            background-color: #ffffff; /* Light background color for the container */
+            color: #343a40; /* Dark text color for the container */
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Rate and Review Movie</h1>
-    <form method="POST" th:action="@{'/rate_movie/' + ${movieId}}">
-        <div class="form-group">
-            <label for="ratingValue">Rating:</label>
-            <input type="number" id="ratingValue" name="ratingValue" min="1" max="5" required>
-        </div>
-        <div class="form-group">
-            <label for="reviewContent">Review:</label>
-            <textarea id="reviewContent" name="reviewContent" class="form-control" rows="4" required></textarea>
-        </div>
-        <!-- You can add more input fields if necessary -->
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+    <div class="container">
+        <h1>Rate and Review Movie</h1>
+        <form method="POST" th:action="@{'/rate_movie/' + ${movieId}}">
+            <div class="form-group">
+                <label for="ratingValue">Rating:</label>
+                <input type="number" id="ratingValue" name="ratingValue" min="1" max="5" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="reviewContent">Review:</label>
+                <textarea id="reviewContent" name="reviewContent" class="form-control" rows="4" required></textarea>
+            </div>
+            <!-- You can add more input fields if necessary -->
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
 </body>
 </html>

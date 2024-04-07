@@ -5,23 +5,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Read Reviews</title>
     <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" /> <!-- import icons -->
+
+    <style>
+        body {
+            background-color: #343a40; /* Dark background color */
+            color: #ffffff; /* Light text color */
+        }
+
+        .container {
+            background-color: #ffffff; /* Light background color for the container */
+            color: #343a40; /* Dark text color for the container */
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .ratings-list {
+            margin-top: 20px;
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .rating-item {
+            border-bottom: 1px solid #dee2e6; /* Separator between rating items */
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+
+        .rating-value {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .reviewer-name {
+            font-style: italic;
+            color: #6c757d; /* Muted text color */
+        }
+    </style>
 </head>
 <body>
-    <h1>Reviews for Movie: <span th:text="${movie.name}"></span></h1>
-    
-    <h2>Ratings and Reviews:</h2>
-    <ul>
-        <li th:each="rating : ${ratings}">
-            <!-- Display rating value -->
-            <p>Rating: <span th:text="${rating.ratingValue}"></span></p>
-            <!-- Display review content if available -->
-            <p th:if="${rating.reviewContent}" th:text="${rating.reviewContent}"></p>
-            <!-- Display reviewer's name if available -->
-            <p th:if="${rating.reviewerName}" th:text="'By: ' + ${rating.reviewerName}"></p>
-            
-            <hr> <!-- Add a horizontal line between each rating/comment pair -->
-        </li>
-    </ul>
-    
+    <div class="container">
+        <h1>Reviews for Movie: <span th:text="${movie.name}"></span></h1>
+        
+        <h2>Ratings and Reviews:</h2>
+        <ul class="ratings-list">
+            <li class="rating-item" th:each="rating : ${ratings}">
+                <!-- Display rating value -->
+                <p class="rating-value">Rating: <span th:text="${rating.ratingValue}"></span></p>
+                <!-- Display review content if available -->
+                <p th:if="${rating.reviewContent}" th:text="${rating.reviewContent}"></p>
+                <!-- Display reviewer's name if available -->
+                <p th:if="${rating.reviewerName}" class="reviewer-name">By: <span th:text="${rating.reviewerName}"></span></p>
+            </li>
+        </ul>
+        <p><a th:href="@{/movielist}" class="btn btn-success">Go back</a></p>
+    </div>
 </body>
 </html>

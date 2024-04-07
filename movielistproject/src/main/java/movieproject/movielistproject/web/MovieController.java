@@ -59,7 +59,7 @@ public class MovieController {
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String returnIndex(){
-        return "index";
+        return "index"; //html
     }
 
     @RequestMapping(value ="/addmovie", method = RequestMethod.GET)
