@@ -51,11 +51,11 @@
         <h2>Ratings and Reviews:</h2>
         <ul class="ratings-list">
             <li class="rating-item" th:each="rating : ${ratings}">
-                <!-- Display rating value -->
+                
                 <p class="rating-value">Rating: <span th:text="${rating.ratingValue}"></span></p>
-                <!-- Display review content if available -->
+                
                 <p th:if="${rating.reviewContent}" th:text="${rating.reviewContent}"></p>
-                <!-- Display reviewer's name if available -->
+                <!-- ei toimi vielä -->
                 <p th:if="${rating.reviewerName}" class="reviewer-name">By: <span th:text="${rating.reviewerName}"></span></p>
             </li>
         </ul>

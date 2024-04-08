@@ -33,28 +33,28 @@ public class MovieController {
     @Autowired
     private CategoryRepository categoryRepository; /* kommentoi jos ei toimi */
 
-    // Controller method to display reviews for a movie 123
+
     @GetMapping("/read_reviews/{movieId}")
     public String readReviews(@PathVariable("movieId") Integer movieId, Model model) {
         // Find the movie by ID
         Optional<Movie> optionalMovie = movieRepository.findById(movieId);
         if (optionalMovie.isPresent()) {
             Movie movie = optionalMovie.get();
-            // Get all ratings for the movie
+            // Get all ratings 
             List<Rating> ratings = ratingRepository.findByMovie(movie);
             model.addAttribute("movie", movie);
             model.addAttribute("ratings", ratings);
             return "read_reviews"; // Return the name of the HTML template file
         } else {
             // Handle movie not found
-            return "error"; // Or any other appropriate action
+            return "error"; 
         }}
     
 
     @RequestMapping(value = "/movielist", method = RequestMethod.GET)
     public String getMovies(Model model){
         model.addAttribute("movies", movieRepository.findAll());
-        return "movielist"; // HTML template file name
+        return "movielist"; 
     }
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
@@ -123,25 +123,6 @@ public class MovieController {
 
 
 
-/*     @PostMapping("/rate_movie/{movieId}")
-public String submitRating(@PathVariable("movieId") Integer movieId, @ModelAttribute Rating rating) {
-    Optional<Movie> optionalMovie = movieRepository.findById(movieId);
-    
-    if (optionalMovie.isPresent()) {
-        Movie movie = optionalMovie.get();
-        rating.setMovie(movie);
-        ratingRepository.save(rating);
-        
-        // Reload movie with updated ratings
-        movie.setRatings(ratingRepository.findByMovie(movie));
-        movieRepository.save(movie);
-    } else {
-        // Handle movie not found
-    }
-
-    return "redirect:/movielist"; 11
-}
- */
 @PostMapping("/rate_movie/{movieId}")
 public String submitRating(@PathVariable("movieId") Integer movieId, @ModelAttribute Rating rating) {
     Optional<Movie> optionalMovie = movieRepository.findById(movieId);
@@ -152,7 +133,7 @@ public String submitRating(@PathVariable("movieId") Integer movieId, @ModelAttri
         // Set the movie for the rating
         rating.setMovie(movie);
         
-        // Save the rating
+        
         ratingRepository.save(rating);
         
         // Update the movie's ratings list
@@ -168,7 +149,6 @@ public String submitRating(@PathVariable("movieId") Integer movieId, @ModelAttri
         double averageRating = sum / ratings.size();
         movie.setAverageRating(averageRating);
         
-        // Save the updated movie
         movieRepository.save(movie);
         
         return "redirect:/movielist";
