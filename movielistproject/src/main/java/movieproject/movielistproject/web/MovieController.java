@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import jakarta.validation.Valid;
 import movieproject.movielistproject.domain.CategoryRepository;
 import movieproject.movielistproject.domain.Movie;
 import movieproject.movielistproject.domain.MovieRepository;
@@ -72,14 +74,27 @@ public class MovieController {
         return "addmovie"; // .html
     }
 
-    @RequestMapping(value= "/savemovie", method = RequestMethod.POST)
-    public String saveMovie(Movie newMovie, Model model) {
+   
+    
+    
+   
 
-        // tallennus
+    @RequestMapping(value = "/savemovie", method = RequestMethod.POST)
+    public String saveMovie(@Valid Movie newMovie, BindingResult bindingResult, Model model) {
+        // Tarkista validointivirheet
+        if (bindingResult.hasErrors()) {
+            // Jos validointivirheitä ilmenee, palaa takaisin lomakkeeseen näyttämään virheet
+            model.addAttribute("movie", newMovie);
+            model.addAttribute("categories", categoryRepository.findAll());
+            return "addmovie";
+        }
+    
+        // Tallennetaan elokuva, jos validointi onnistui
         movieRepository.save(newMovie);
-        
-        return "redirect:/movielist"; 
+    
+        return "redirect:/movielist";
     }
+    
 
      @RequestMapping(value = "/deletemovie/{movieId}", method = RequestMethod.GET)
     @PreAuthorize("hasAuthority('ADMIN')") //admin voi vain poistaa
@@ -159,9 +174,13 @@ public String submitRating(@PathVariable("movieId") Integer movieId, @ModelAttri
 }
 
 
+
+
+
     
 
     }
+
 
 
 

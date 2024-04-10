@@ -71,15 +71,15 @@ public class MovielistprojectApplication {
 
 			movieRepository.save(movie1);
 
-			Movie movie2 = new Movie(2, "Parasite", 2017, "Bong Joon Ho", rating5, category3);
+			Movie movie2 = new Movie(2, "Parasite", 2017, "Bong Joon Ho", rating5, category6);
 
 			movieRepository.save(movie2);
 
-			Movie movie3 = new Movie(3, "The Silence of the Lambs", 1991, "Jonathan Demme", rating3, category4);
+			Movie movie3 = new Movie(3, "The Silence of the Lambs", 1991, "Jonathan Demme", rating3, category2);
 
 			movieRepository.save(movie3);
 
-			Movie movie4 = new Movie(4, "jaskajokunen", 2022, "v.l", rating5, category2);
+			Movie movie4 = new Movie(4, "Psyko", 1960, "Alfred Hitchcock", rating5, category2);
 			movieRepository.save(movie4);
  
 			

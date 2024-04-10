@@ -14,9 +14,17 @@
     </h1>
     <form method="POST" action="#" th:action="@{/savemovie}" th:object=${movie}>
         <p>Name: <input type="text" th:field="${movie.name}" /></p>
-        <p>Director: <input type="text" th:field="${movie.director}" /></p>
+        <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error message here</p> <!-- Display error message -->
+
+
+        <p>Director: <input type="text" th:field="${movie.director}" th:required="required" /></p>
+        
+
         <p>Publication Year: <input type="text" th:field="${movie.publicationYear}" /></p>
-        <p>Rating: <input type="text" th:field="${movie.rating}" /></p>
+        <p th:if="${#fields.hasErrors('publicationYear')}" th:errors="*{publicationYear}">Error message here</p>
+
+        <p>Rating: <input type="text" th:field="${movie.rating}" th:required="required" /></p> <!-- toimii myös required -->
+
        
         <label for="categorylist">Category</label>
         <select id="categorylist" th:field="*{category}" class="form-control">

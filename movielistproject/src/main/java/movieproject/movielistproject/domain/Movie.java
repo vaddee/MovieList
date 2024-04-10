@@ -13,14 +13,19 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer movieId;
+    @Size(min=1, max=30)
     private String name;
+    @NotNull
     private Integer publicationYear;
+    @NotNull
     private String director;
 
     @ManyToOne
@@ -31,7 +36,7 @@ public class Movie {
 
     
 
-    private double averageRating; // New field to store the average rating
+    private double averageRating; //  store the average rating
 
     // Movie ManyToOne Category
     @JsonIgnoreProperties("movies") // avoidataan infinite loop Json haussa!
@@ -118,13 +123,13 @@ public class Movie {
             this.averageRating = averageRating;
         }
 
-            // Calculate the average rating based on the ratings associated with the movie
+            // Average rating lasku
     public double getAverageRating() {
         if (ratings != null && !ratings.isEmpty()) {
             double totalRating = ratings.stream().mapToDouble(Rating::getRatingValue).sum();
             return totalRating / ratings.size();
         } else {
-            return 0.0; // Return 0 if no ratings are set for the movie
+            return 0.0; 
         }
     }
 

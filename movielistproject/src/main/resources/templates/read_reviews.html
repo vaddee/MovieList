@@ -55,8 +55,7 @@
                 <p class="rating-value">Rating: <span th:text="${rating.ratingValue}"></span></p>
                 
                 <p th:if="${rating.reviewContent}" th:text="${rating.reviewContent}"></p>
-                <!-- ei toimi vielä -->
-                <p th:if="${rating.reviewerName}" class="reviewer-name">By: <span th:text="${rating.reviewerName}"></span></p>
+                
             </li>
         </ul>
         <p><a th:href="@{/movielist}" class="btn btn-success">Go back</a></p>

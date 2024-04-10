@@ -72,11 +72,8 @@
                     <td th:text="${movie.name}">Name</td>
                     <td th:text="${movie.publicationYear}">Publication Year</td>
                     <td th:text="${movie.director}">Director</td>
-                <!--     <td>
-                        <span th:if="${movie.rating != null}" th:text="${movie.rating.ratingValue}">No rating</span>
-                        <span th:unless="${movie.rating != null}">No rating</span>
-                    </td> -->
-                    <td> <!-- pois jos ei toimi -->
+                
+                    <td> 
                         <span th:if="${movie.category != null}" th:text="${movie.category.name}">Category</span>
                         <span th:if="${movie.category == null}" th:text="None">Category</span>
                     </td>
