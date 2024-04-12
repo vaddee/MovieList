@@ -23,8 +23,8 @@
         <p>Publication Year: <input type="text" th:field="${movie.publicationYear}" /></p>
         <p th:if="${#fields.hasErrors('publicationYear')}" th:errors="*{publicationYear}">Error message here</p>
 
-        <p>Rating: <input type="text" th:field="${movie.rating}" th:required="required" /></p> <!-- toimii myös required -->
-
+        <!-- <p>Rating: <input type="text" th:field="${movie.rating}" th:required="required" /></p> <!-- toimii myös required -->
+ 
        
         <label for="categorylist">Category</label>
         <select id="categorylist" th:field="*{category}" class="form-control">

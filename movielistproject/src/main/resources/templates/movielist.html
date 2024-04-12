@@ -78,7 +78,7 @@
                         <span th:if="${movie.category == null}" th:text="None">Category</span>
                     </td>
                     <td th:text="${movie.averageRating}">No rating</td>
-                    <td th:text="${#lists.size(movie.ratings)} + ' reviews'">No reviews</td>
+                    <td th:text="${#lists.size(movie.ratings)} + ' reviews'">No reviews</td> <!-- näyttää monta arvostelua -->
                     <td sec:authorize="hasAuthority('ADMIN')">
                         <a th:href="@{/deletemovie/{id}(id=${movie.movieId})}" class="btn btn-danger">Delete</a>
                         <a th:href="@{/editmovie/{id}(id=${movie.movieId})}" class="btn btn-success">Edit</a>
