@@ -22,22 +22,22 @@ public class MovieRestController {
     @Autowired
     private MovieRepository movieRepository;
 
-    // REST to get all 
-    @RequestMapping(value="/movies", method = RequestMethod.GET)
-    public @ResponseBody List<Movie> movieListRest(){
+    // REST to get all
+    @RequestMapping(value = "/movies", method = RequestMethod.GET)
+    public @ResponseBody List<Movie> movieListRest() {
         return (List<Movie>) movieRepository.findAll();
     }
 
     // REST to get movie by id
     @RequestMapping(value = "/movies/{id}", method = RequestMethod.GET)
-    public @ResponseBody Optional <Movie> getOneMovieById(@PathVariable("id") Integer movieId){
+    public @ResponseBody Optional<Movie> getOneMovieById(@PathVariable("id") Integer movieId) {
         return movieRepository.findById(movieId);
     }
 
-     @RequestMapping(value = "/movies", method = RequestMethod.POST)
-    public @ResponseBody Movie addNewMovie(@RequestBody Movie newMovie){
+    @RequestMapping(value = "/movies", method = RequestMethod.POST)
+    public @ResponseBody Movie addNewMovie(@RequestBody Movie newMovie) {
 
         return movieRepository.save(newMovie);
 
-    } 
+    }
 }

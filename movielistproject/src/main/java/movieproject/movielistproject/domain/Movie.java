@@ -1,7 +1,7 @@
 package movieproject.movielistproject.domain;
 
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
